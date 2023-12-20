@@ -1,0 +1,19 @@
+# Data Analytics Power BI Report
+This project is to produce a report that will present a high-level business summary tailored for C-suite executives, and also give insights into their highest value customers segmented by sales region, provide a detailed analysis of top-performing products categorised by type against their sales targets, and a visually appealing map visual that spotlights the performance metrics of their retail outlets across different territories.
+
+The project will be based on the following scenario:
+
+A medium-sized international retailer who is keen on elevating their business intelligence practices. With operations spanning across different regions, they've accumulated large amounts of sales from disparate sources over the years.
+
+Recognizing the value of this data, they aim to transform it into actionable insights for better decision-making. The goal is to use Microsoft Power BI to design a comprehensive Quarterly report. This will involve extracting and transforming data from various origins, designing a robust data model rooted in a star-based schema, and then constructing a multi-page report.
+
+## Importing the data
+This project consists of multiple data tables which needs to be imported in a varity of ways.
+
+- **Orders**: This table was imported from a Azure SQL Database thus this was the option which needed to be chosen under the Azure heading when using the get data function. After inputting the correct database details, some transfomations needed to be performed in orded to get the data in a useable format. First the column named [Card Number] needed to be deleted to ensure data privacy. Then the [Order Date] and [Shipping Date] columns needed to be separated usuing the Split Column feature into two distinct columns each: one for the date and another for the time. Due to the [Order Date] column having missing or null values, these had to be filtered out and removed to maintain data integrity. This could be done using the drop down filter at the top of the column and unselecting the null value. Finally some columns had to be renamed to align with Power BI naming conventions, ensuring consistency and clarity in the report.
+
+- **Products**: To load this data into the project the Text/CSV option from get data is needed. In the Data view, the Remove Duplicates function is used on the product_code column to ensure each product code is unique. The Column From Examples feature in Power Query Editor, was then used to generate two new columns from the weight column - one for the weight values and another for the units (e.g. kg, g, ml). For the values column, the data type needed to be converted to a decimal number. Then replace any error values in this column with the number 1. Next a new weight in kg column is created so the weight unit is consistent. Finally any redundant columns are deleted using the Power Query Editor.
+
+- **Stores**: The Get Data option is used to connect to Azure Blob Storage and import the Stores table into the project. Then the columns in the dataset were renamed to align with Power BI naming conventions, ensuring clarity and consistency in the report.
+
+- **Customers**: Unlike the other tables, this table is made up from multiple CSV files. These CSV files come from a folder inside a zip file, each with the same column format, one for each of the regions in which the company operates. Using the Get Data option in Power BI to import the Customers folder into the project by the Folder data connector. Combine and Transform is used to import the data. Power BI automatically appended the three files into one query. Then a Full Name column was created by combining the [First Name] and [Last Name] columns.
